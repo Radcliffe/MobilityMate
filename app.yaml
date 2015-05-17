@@ -10,5 +10,10 @@ libraries:
   version: latest
 
 handlers:
+- url: /icons
+  static_dir: icons
+- url: /data
+  static_dir: data
+
 - url: /.*
   script: main.app

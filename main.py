@@ -1,7 +1,7 @@
 import webapp2
 import jinja2
 import os
-
+from utils import random_points
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -12,7 +12,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class MainPage(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        template_values = {}
+        template_values = {'locations': random_points()}
         self.response.write(template.render(template_values))
 
 app = webapp2.WSGIApplication([
