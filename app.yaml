@@ -17,5 +17,7 @@ handlers:
   static_dir: data
 - url: /new
   script: new.app
+- url: /add
+  script: add.app
 - url: /.*
   script: main.app
