@@ -2,18 +2,19 @@
 <html>
   <head>
     <style type="text/css">
-      html, body, #map-canvas { height: 450px; width: 675px; margin: 0; padding: 0;}
+      html, body, #map-canvas { height: 400px; width: 600px; margin: 0; padding: 0;}
+      #selection {background-color: #000000;}
       .checkbox-grid li {
          display: block;
          float: left;
-         width: 30%;
+         width: 50%;
          color: #ffffff;
          background-color: #000000;
       }
     </style>
     <title>Mobility Mate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1Q03jj8ALdicN8E2M1ORIRU9jJqPqvA">
     </script>
@@ -92,7 +93,6 @@
   <h1>Mobility Mate</h1>
   
 <div id="map-canvas"></div>
-<div id="selection">
 <ul class="checkbox-grid">
    <li><input type="checkbox" class="check" name="text1" id="check1" value="0" /><label for="text1">Bathrooms</label>
    <img src="icons/blue-dot.png" height="24"></li>
