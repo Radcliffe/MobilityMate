@@ -15,6 +15,7 @@ handlers:
   static_dir: icons
 - url: /data
   static_dir: data
-
+- url: /new
+  script: new.app
 - url: /.*
   script: main.app

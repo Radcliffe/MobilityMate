@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+$('document').ready(function() {
+
+var x = document.getElementById("msg");
+var latitude = document.getElementById("latitude");
+var longitude = document.getElementById("longitude");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    latitude.value = position.coords.latitude;
+    longitude.value = position.coords.longitude;
+}
+
+$('#getLocation').click(getLocation);
+
+});
+
+    </script>
+    <title>Add new location</title>
+</head>
+<body>
+<h1>Add new location</h1>
+
+<p id="msg"></p>
+<button id="getLocation">Get current location</button>
+<br>
+
+<form action="/add" method="POST">
+    Latitude:
+    <input name="latitude" id="latitude">
+    <br>
+    Longitude:
+    <input name="longitude" id="longitude">
+    <br>
+    Amenity:
+    <select name="amenity">
+        <option value=""></option>
+        <option value="0">Bathroom</option>
+        <option value="1">Entrance</option>
+        <option value="2">Curb cut</option>
+        <option value="3">Elevator</option>
+        <option value="4">Public transport</option>
+        <option value="5">Hotel</option>
+        <option value="6">Recreation</option>
+        <option value="7">Parking</option>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+
+</body>
+</html>
