@@ -19,5 +19,7 @@ handlers:
   script: new.app
 - url: /add
   script: add.app
+- url: /list
+  script: list.app
 - url: /.*
   script: main.app
