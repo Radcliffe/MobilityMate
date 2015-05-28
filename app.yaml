@@ -13,8 +13,8 @@ libraries:
 handlers:
 - url: /icons
   static_dir: icons
-- url: /data
-  static_dir: data
+- url: /scripts
+  static_dir: scripts
 - url: /new
   script: new.app
 - url: /add
