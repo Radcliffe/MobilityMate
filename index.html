@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <style type="text/css">
-      html, body, #map-canvas { height: 360px; width: 540px; margin: 0; padding: 0;}
-      .checkbox-grid li {
-         display: block;
-         float: left;
-         width: 50%;
-         color: #ffffff;
-         background-color: #000000;
-      }
+        html, body, #map-canvas {
+            height: 360px;
+            width: 540px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .checkbox-grid li {
+            display: block;
+            float: left;
+            width: 50%;
+            color: #ffffff;
+            background-color: #000000;
+        }
+
+        .site-footer, .map-class:after {
+            height: 140px;
+        }
+
+        .site-footer {
+            background: black;
+        }
     </style>
     <title>Mobility Mate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1Q03jj8ALdicN8E2M1ORIRU9jJqPqvA">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1Q03jj8ALdicN8E2M1ORIRU9jJqPqvA">
     </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js">
     </script>
@@ -24,30 +38,34 @@
 
 
     </script>
-  </head>
-  <body>
-  <h1>Mobility Mate</h1>
+</head>
+<body>
+<h1>Mobility Mate</h1>
 
-  <p><a href="/new">Add new location</a></p>
+<p><a href="/new">Add new location</a></p>
+
 <div id="map-canvas"></div>
-<ul class="checkbox-grid">
-   <li><input type="checkbox" class="check" name="text1" id="check1" value="0" /><label for="text1">Bathrooms</label>
-   <img src="icons/blue-dot.png" height="24"></li>
-   <li><input type="checkbox" class="check" name="text2" value="1" /><label for="text2">Entrances</label>
-   <img src="icons/ltblue-dot.png" height="24"></li>
-   <li><input type="checkbox" class="check" name="text3" value="2" /><label for="text3">Curb cuts</label>
-   <img src="icons/pink-dot.png" height="24"></li>
-   <li><input type="checkbox" class="check" name="text4" value="3" /><label for="text4">Elevators</label>
-   <img src="icons/red-dot.png" height="24"></li>
-   <li><input type="checkbox" class="check" name="text5" value="4" /><label for="text5">Public transport</label>
-   <img src="icons/green-dot.png" height="24"></li>
-   <li><input type="checkbox" class="check" name="text6" value="5" /><label for="text6">Hotels</label>
-   <img src="icons/orange-dot.png" height="24"></li>
-   <li><input type="checkbox" class="check" name="text7" value="6" /><label for="text7">Recreation</label>
-   <img src="icons/purple-dot.png" height="24"></li>
-   <li><input type="checkbox" class="check" name="text8" value="7" /><label for="text8">Parking</label>
-   <img src="icons/yellow-dot.png" height="24"></li>
-   <li><input type="checkbox" id="selectAll" name="text9" value="99" /><label for="text9">View all</label></li>
-</ul>
-  </body>
+<footer class="site-footer">
+    <ul class="checkbox-grid">
+        <li><input type="checkbox" class="check" name="text1" id="check1" value="0"/><label
+                for="text1">Bathrooms</label>
+            <img src="icons/blue-dot.png" height="24"></li>
+        <li><input type="checkbox" class="check" name="text2" value="1"/><label for="text2">Entrances</label>
+            <img src="icons/ltblue-dot.png" height="24"></li>
+        <li><input type="checkbox" class="check" name="text3" value="2"/><label for="text3">Curb cuts</label>
+            <img src="icons/pink-dot.png" height="24"></li>
+        <li><input type="checkbox" class="check" name="text4" value="3"/><label for="text4">Elevators</label>
+            <img src="icons/red-dot.png" height="24"></li>
+        <li><input type="checkbox" class="check" name="text5" value="4"/><label for="text5">Public transport</label>
+            <img src="icons/green-dot.png" height="24"></li>
+        <li><input type="checkbox" class="check" name="text6" value="5"/><label for="text6">Hotels</label>
+            <img src="icons/orange-dot.png" height="24"></li>
+        <li><input type="checkbox" class="check" name="text7" value="6"/><label for="text7">Recreation</label>
+            <img src="icons/purple-dot.png" height="24"></li>
+        <li><input type="checkbox" class="check" name="text8" value="7"/><label for="text8">Parking</label>
+            <img src="icons/yellow-dot.png" height="24"></li>
+        <li><input type="checkbox" id="selectAll" name="text9" value="99"/><label for="text9">View all</label></li>
+    </ul>
+</footer>
+</body>
 </html>
