@@ -2,11 +2,22 @@
 <html>
 <head>
     <style type="text/css">
-        html, body, #map-canvas {
+        html, body {
+            height: 100%;
+            margin: 0;
+            background-color: #E5E5E5;
+            font-family: 'RobotoDraft', sans-serif;
+        }
+
+        #addData {
+            display: none;
+        }
+
+        #map-canvas {
             height: 360px;
-            width: 540px;
             margin: 0;
             padding: 0;
+            display: block;
         }
 
         .checkbox-grid li {
@@ -15,57 +26,189 @@
             width: 50%;
             color: #ffffff;
             background-color: #000000;
+            font-size: 15px;
         }
 
         .site-footer, .map-class:after {
             height: 140px;
+            width: 360px;
         }
 
         .site-footer {
             background: black;
         }
+
+        core-header-panel {
+            height: 100%;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        core-toolbar {
+            background: #03a9f4;
+            color: white;
+        }
+
+        #tabs {
+            width: 100%;
+            margin: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            text-transform: uppercase;
+        }
+
+        paper-button[raised].colored {
+            background: #4285f4;
+            color: #fff;
+        }
+
+        paper-dropdown-menu {
+            box-sizing: border-box;
+            width: 170px;
+        }
+
+        core-menu {
+            box-sizing: border-box;
+            width: 170px;
+        }
+
+        paper-item {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        select {
+            font-size: 17px;
+        }
+
     </style>
     <title>Mobility Mate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1Q03jj8ALdicN8E2M1ORIRU9jJqPqvA">
     </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js">
     </script>
-    <script type="text/javascript" src="data/locations.js"></script>
-    <script type="text/javascript" src="scripts/main.js">
-
-
-    </script>
+    <script src="components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="components/font-roboto/roboto.html">
+    <link rel="import" href="components/core-header-panel/core-header-panel.html">
+    <link rel="import" href="components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="components/paper-tabs/paper-tabs.html">
+    <link rel="import" href="components/paper-input/paper-input-decorator.html">
+    <link rel="import" href="components/paper-button/paper-button.html">
+    <link rel="import" href="components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="shortcut icon" href="icons/favicon.ico">
+    <script type="text/javascript" src="scripts/main.js"></script>
 </head>
 <body>
-<h1>Mobility Mate</h1>
 
-<p><a href="/new">Add new location</a></p>
+<core-header-panel>
 
-<div id="map-canvas"></div>
-<footer class="site-footer">
-    <ul class="checkbox-grid">
-        <li><input type="checkbox" class="check" name="text1" id="check1" value="0"/><label
-                for="text1">Bathrooms</label>
-            <img src="icons/blue-dot.png" height="24"></li>
-        <li><input type="checkbox" class="check" name="text2" value="1"/><label for="text2">Entrances</label>
-            <img src="icons/ltblue-dot.png" height="24"></li>
-        <li><input type="checkbox" class="check" name="text3" value="2"/><label for="text3">Curb cuts</label>
-            <img src="icons/pink-dot.png" height="24"></li>
-        <li><input type="checkbox" class="check" name="text4" value="3"/><label for="text4">Elevators</label>
-            <img src="icons/red-dot.png" height="24"></li>
-        <li><input type="checkbox" class="check" name="text5" value="4"/><label for="text5">Public transport</label>
-            <img src="icons/green-dot.png" height="24"></li>
-        <li><input type="checkbox" class="check" name="text6" value="5"/><label for="text6">Hotels</label>
-            <img src="icons/orange-dot.png" height="24"></li>
-        <li><input type="checkbox" class="check" name="text7" value="6"/><label for="text7">Recreation</label>
-            <img src="icons/purple-dot.png" height="24"></li>
-        <li><input type="checkbox" class="check" name="text8" value="7"/><label for="text8">Parking</label>
-            <img src="icons/yellow-dot.png" height="24"></li>
-        <li><input type="checkbox" id="selectAll" name="text9" value="99"/><label for="text9">View all</label></li>
-    </ul>
-</footer>
+    <core-toolbar>
+        <span><strong>Mobility Mate</strong></span>
+        <paper-tabs id="tabs" selected="map" self-end>
+            <paper-tab name="map">Map</paper-tab>
+            <paper-tab name="new">New</paper-tab>
+            <paper-tab name="about">About</paper-tab>
+        </paper-tabs>
+
+    </core-toolbar>
+    <div id="addData">
+        <paper-button onclick="buttonClick()" raised>Get location</paper-button>
+        <br>
+        <paper-input-decorator label="Latitude" floatingLabel>
+            <input id="latitude" is="core-input"/>
+        </paper-input-decorator>
+        <paper-input-decorator label="Longitude" floatingLabel>
+            <input id="longitude" is="core-input"/>
+        </paper-input-decorator>
+        <br>
+        Amenity:<br>
+        <select name="amenity">
+            <option value="-1"></option>
+            <option value="0">Bathroom</option>
+            <option value="1">Entrance</option>
+            <option value="2">Curb cut</option>
+            <option value="3">Elevator</option>
+            <option value="4">Public transport</option>
+            <option value="5">Hotel</option>
+            <option value="6">Recreation</option>
+            <option value="7">Parking</option>
+        </select>
+        <paper-input-decorator label="Notes (optional)" floatingLabel>
+            <input id="notes" is="core-input"></input>
+        </paper-input-decorator>
+        <br>
+        <paper-button raised class="colored" onclick="submit()">Submit</paper-button>
+    </div>
+    <div id="map-canvas"></div>
+    <footer class="site-footer">
+        <ul class="checkbox-grid">
+            <li><input type="checkbox" class="check" name="text1" id="check1" value="0"/><label
+                    for="check1">Bathrooms</label>
+                <img src="icons/blue-dot.png" height="24"></li>
+            <li><input type="checkbox" class="check" name="text2" value="1"/><label>Entrances</label>
+                <img src="icons/ltblue-dot.png" height="24"></li>
+            <li><input type="checkbox" class="check" name="text3" value="2"/><label>Curb cuts</label>
+                <img src="icons/pink-dot.png" height="24"></li>
+            <li><input type="checkbox" class="check" name="text4" value="3"/><label>Elevators</label>
+                <img src="icons/red-dot.png" height="24"></li>
+            <li><input type="checkbox" class="check" name="text5" value="4"/><label>Public transport</label>
+                <img src="icons/green-dot.png" height="24"></li>
+            <li><input type="checkbox" class="check" name="text6" value="5"/><label>Hotels</label>
+                <img src="icons/orange-dot.png" height="24"></li>
+            <li><input type="checkbox" class="check" name="text7" value="6"/><label>Recreation</label>
+                <img src="icons/purple-dot.png" height="24"></li>
+            <li><input type="checkbox" class="check" name="text8" value="7"/><label>Parking</label>
+                <img src="icons/yellow-dot.png" height="24"></li>
+            <li><input type="checkbox" id="selectAll" name="text9" value="99"/><label>View all</label></li>
+        </ul>
+    </footer>
+</core-header-panel>
+<script>
+    var lat = 45;
+    var lng = -93;
+    var amenity;
+    var tabs = document.querySelector('paper-tabs');
+    tabs.addEventListener('core-select', function () {
+        if (tabs.selected == 'new') {
+            $('#map-canvas').hide(250);
+            $('#addData').show(250);
+            $('footer').hide(250)
+        } else if (tabs.selected == 'map') {
+            $('#map-canvas').show(250);
+            $('#addData').hide(250);
+            $('footer').show(250);
+        }
+    });
+    function buttonClick() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        lat = position.coords.latitude.toFixed(7);
+                        lng = position.coords.longitude.toFixed(7);
+                        $('#latitude').val(lat);
+                        $('#longitude').val(lng);
+                    }
+            );
+        }
+    }
+    function submit() {
+        lat = parseFloat($('#latitude').val());
+        lng = parseFloat($('#longitude').val());
+        color = parseInt($('select').val());
+        notes = $('#notes').val();
+        data = {latitude: lat, longitude: lng, amenity: color};
+        if (color >= 0) {
+            data = {latitude: lat, longitude: lng, amenity: color, notes: notes};
+            $.post("/add", data, getMarkers);
+            location.reload();
+        }
+    }
+</script>
 </body>
 </html>

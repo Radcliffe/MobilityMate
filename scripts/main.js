@@ -2,15 +2,8 @@ var N;
 var latitude = 44.873773;
 var longitude = -91.927094;
 var locations = [];
+var map;
 
-function getMarkers() {
-    $.ajax({
-        type: 'GET', url: 'list', success: function (result) {
-            locations = result;
-            getCurrentPosition();
-        }
-    });
-}
 
 function getCurrentPosition() {
     if (navigator.geolocation) {
@@ -32,8 +25,19 @@ function initialize() {
         center: {lat: latitude, lng: longitude},
         zoom: 15
     };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
+    map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
+    getMarkers();
+}
+
+function getMarkers() {
+    $.ajax({
+        type: 'GET', url: 'list', success: setMarkers
+    })
+}
+
+function setMarkers(result) {
+    locations = result;
     var icons = ['icons/blue-dot.png',
         'icons/ltblue-dot.png',
         'icons/pink-dot.png',
@@ -59,7 +63,7 @@ function initialize() {
 
     $('.check').change(
         function () {
-            color = parseInt(this.value);
+            var color = parseInt(this.value);
             for (var i = 0; i < N; i++) {
                 if (locations[i].color == color) {
                     allMarkers[i].setVisible(this.checked)
@@ -80,4 +84,4 @@ function initialize() {
         });
 }
 
-google.maps.event.addDomListener(window, 'load', getMarkers);
+google.maps.event.addDomListener(window, 'load', getCurrentPosition);
