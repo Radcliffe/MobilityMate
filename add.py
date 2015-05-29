@@ -6,12 +6,12 @@ from google.appengine.api import users
 amenities = ['Bathroom', 'Entrance', 'Curb cut', 'Elevator',
              'Public transport', 'Hotel', 'Recreation', 'Parking']
 
-def save_location(latitude, longitude, color, user):
+def save_location(latitude, longitude, color, notes):
     location = Location(parent=ancestor(),
                         coordinates=ndb.GeoPt(latitude, longitude),
                         amenity=amenities[color],
                         color=color,
-                        user=user)
+                        notes=notes)
     location.put()
     print "location saved"
 
@@ -25,7 +25,8 @@ class LocationHandler(webapp2.RequestHandler):
             latitude = float(self.request.get('latitude'))
             longitude = float(self.request.get('longitude'))
             color = int(self.request.get('amenity'))
-            save_location(latitude, longitude, color, user)
+            notes = self.request.get('notes')
+            save_location(latitude, longitude, color, notes)
             self.redirect('/')
 
     def get(self):
