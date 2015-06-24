@@ -82,27 +82,27 @@ function setMarkers(result) {
 
     N = allMarkers.length;
 
-    $('.check').change(
-        function () {
-            var color = parseInt(this.value);
-            for (var i = 0; i < N; i++) {
-                if (locations[i].color == color) {
-                    allMarkers[i].setVisible(this.checked)
-                }
-            }
-        }
-    );
+//    $('.check').change(
+//        function () {
+//            var color = parseInt(this.value);
+//            for (var i = 0; i < N; i++) {
+//                if (locations[i].color == color) {
+//                    allMarkers[i].setVisible(this.checked)
+//                }
+//            }
+//        }
+//    );
 
-    $('#selectAll').click(
-        function () {
-            var checked = this.checked;
-            $('.check').each(function () {
-                this.checked = checked;
-            });
-            for (var i = 0; i < N; i++) {
-                allMarkers[i].setVisible(this.checked)
-            }
-    });
+//    $('#selectAll').click(
+//        function () {
+//            var checked = this.checked;
+//            $('.check').each(function () {
+//                this.checked = checked;
+//            });
+//            for (var i = 0; i < N; i++) {
+//                allMarkers[i].setVisible(this.checked)
+//            }
+//    });
     
     var selector = document.querySelector('core-selector');
 
