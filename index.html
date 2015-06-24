@@ -223,7 +223,6 @@
         color = parseInt($('select').val());
         notes = $('#notes').val();
         data = {latitude: lat, longitude: lng, amenity: color};
-        console.log('post data = ', data);
         if (color >= 0) {
             data = {latitude: lat, longitude: lng, amenity: color, notes: notes};
             $.post("/add", data, getMarkers);
