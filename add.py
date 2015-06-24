@@ -1,7 +1,6 @@
 import webapp2
 from models import Location, ancestor
 from google.appengine.ext import ndb
-from google.appengine.api import users
 
 amenities = ['bathroom', 'curbcut', 'elevator', 'entrance', 'gas',
              'lodging', 'parking', 'transport', 'rentalvehicle']
@@ -17,10 +16,6 @@ def save_location(latitude, longitude, color, notes):
 
 class LocationHandler(webapp2.RequestHandler):
     def post(self):
-        user = users.get_current_user()
-        # if not user:
-        #    self.redirect(users.create_login_url(self.request.uri))
-        # if user:
         latitude = float(self.request.get('latitude'))
         longitude = float(self.request.get('longitude'))
         color = int(self.request.get('amenity'))
