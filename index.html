@@ -21,7 +21,9 @@
         }
 
         .heading {
-            font-size: 20px;
+            background: blue;
+            color: white;
+            font-size: 24px;
         }
         
         .checkbox-grid li {
@@ -149,13 +151,15 @@
     <div class="heading" onclick="toggle()">Select amenities</div>
     <core-collapse>
         <core-selector class="list" selected="{{multiSelected}}" multi>
+            <div>Bathrooms</div>
             <div>Curb cuts</div>
-            <div>Lodging</div>
-            <div>Restaurants</div>
-            <div>Gas stations</div>
-            <div>Entrances</div>
             <div>Elevators</div>
-            <div>Rental Vehicles</div>
+            <div>Entrances</div>
+            <div>Gas stations</div>
+            <div>Lodging</div>
+            <div>Parking</div>
+            <div>Public transportation</div>
+            <div>Rental vehicles</div>
         </core-selector>
     </core-collapse>
 
@@ -175,13 +179,15 @@
         Amenity:<br>
         <select name="amenity">
             <option value="-1"></option>
-            <option value="0">Curb cuts</option>
-            <option value="1">Lodging</option>
-            <option value="2">Restaurants</option>
-            <option value="3">Gas stations</option>
-            <option value="4">Entrances</option>
-            <option value="5">Elevators</option>
-            <option value="6">Rental vehicles</option>
+            <option value="0">Bathrooms</option>
+            <option value="1">Curb cuts</option>
+            <option value="2">Elevators</option>
+            <option value="3">Entrances</option>
+            <option value="4">Gas stations</option>
+            <option value="5">Lodging</option>
+            <option value="6">Parking</option>
+            <option value="7">Public transportation</option>
+            <option value="8">Rental vehicles</option>
         </select>
         <paper-input-decorator label="Notes (optional)" floatingLabel>
             <input id="notes" is="core-input"></input>

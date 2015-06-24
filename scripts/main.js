@@ -23,7 +23,7 @@ function setPosition(position) {
 function initialize() {
     var mapOptions = {
         center: {lat: latitude, lng: longitude},
-        zoom: 14
+        zoom: 15
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
@@ -42,9 +42,7 @@ function initialize() {
          map.fitBounds(place.geometry.viewport);
        } else {
          map.setCenter(place.geometry.location);
-         map.setZoom(17);
        }
-       console.log(JSON.stringify(place.geometry.location));
        var loc = place.geometry.location
        $('#latitude').val(loc.A.toFixed(7));
        $('#longitude').val(loc.F.toFixed(7));
@@ -67,7 +65,8 @@ function setMarkers(result) {
         'icons/green-dot.png',
         'icons/orange-dot.png',
         'icons/purple-dot.png',
-        'icons/yellow-dot.png'];
+        'icons/yellow-dot.png',
+        'icons/blue-pushpin.png'];
 
     var allMarkers = [];
 

@@ -3,7 +3,8 @@ from models import Location, ancestor
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
-amenities = ['curbcut', 'lodging', 'restaurant', 'gas', 'entrance', 'elevator', 'rentalvehicle']
+amenities = ['bathroom', 'curbcut', 'elevator', 'entrance', 'gas',
+             'lodging', 'parking', 'transport', 'rentalvehicle']
 
 def save_location(latitude, longitude, color, notes):
     location = Location(parent=ancestor(),

@@ -1,7 +1,6 @@
 import webapp2
 import jinja2
 import os
-from utils import random_points
 from google.appengine.api import users
 
 JINJA_ENVIRONMENT = jinja2.Environment(
