@@ -13,7 +13,6 @@ def save_location(latitude, longitude, color, notes):
                         color=color,
                         notes=notes)
     location.put()
-    print "location saved"
 
 
 class LocationHandler(webapp2.RequestHandler):
@@ -27,7 +26,6 @@ class LocationHandler(webapp2.RequestHandler):
         color = int(self.request.get('amenity'))
         notes = self.request.get('notes')
         save_location(latitude, longitude, color, notes)
-        print "location saved"
         self.redirect('/')
 
     def get(self):
