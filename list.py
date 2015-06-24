@@ -9,7 +9,7 @@ class ListHandler(webapp2.RequestHandler):
     def get(self):
         query = Location.query(ancestor=ancestor())
         locations = []
-        for loc in query.fetch(50):
+        for loc in query.fetch(999):
             dic = {'id': loc.key.id(),
                    'latitude': loc.coordinates.lat,
                    'longitude': loc.coordinates.lon,
