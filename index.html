@@ -113,10 +113,10 @@
 
     </style>
     <title>Mobility Mate</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
     <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1Q03jj8ALdicN8E2M1ORIRU9jJqPqvA">
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBu1Q03jj8ALdicN8E2M1ORIRU9jJqPqvA">
     </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js">
     </script>
@@ -131,6 +131,7 @@
     <link rel="import" href="components/core-collapse/core-collapse.html">
     <link rel="shortcut icon" href="icons/favicon.ico">
     <script type="text/javascript" src="scripts/main.js"></script>
+
 </head>
 <body>
 
@@ -161,6 +162,9 @@
     <div id="addData">
         <paper-button onclick="buttonClick()" raised>Get location</paper-button>
         <br>
+        <paper-input-decorator label="Place name" floatingLabel>
+            <input id="placename" is="core-input"/>
+        </paper-input-decorator>
         <paper-input-decorator label="Latitude" floatingLabel>
             <input id="latitude" is="core-input"/>
         </paper-input-decorator>

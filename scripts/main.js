@@ -23,10 +23,32 @@ function setPosition(position) {
 function initialize() {
     var mapOptions = {
         center: {lat: latitude, lng: longitude},
-        zoom: 15
+        zoom: 14
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
+    var input = document.getElementById('placename');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+    var infowindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+       infowindow.close();
+       var place = autocomplete.getPlace();
+       if (!place.geometry) {
+         window.alert("Autocomplete's returned place contains no geometry");
+         return;
+       }
+       if (place.geometry.viewport) {
+         map.fitBounds(place.geometry.viewport);
+       } else {
+         map.setCenter(place.geometry.location);
+         map.setZoom(17);
+       }
+       console.log(JSON.stringify(place.geometry.location));
+       var loc = place.geometry.location
+       $('#latitude').val(loc.A.toFixed(7));
+       $('#longitude').val(loc.F.toFixed(7));
+    });
     getMarkers();
 }
 
