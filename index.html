@@ -14,12 +14,16 @@
         }
 
         #map-canvas {
-            height: 360px;
+            height: 500px;
             margin: 0;
             padding: 0;
             display: block;
         }
 
+        .heading {
+            font-size: 20px;
+        }
+        
         .checkbox-grid li {
             display: block;
             float: left;
@@ -83,6 +87,29 @@
         select {
             font-size: 17px;
         }
+        
+        .list {
+          display: block;
+          border: 1px solid #ccc;
+          border-bottom: none;
+          background: #666;
+          color: white;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .list > * {
+          height: 40px;
+          line-height: 40px;
+          padding: 0 20px;
+          border-bottom: 1px solid #ccc;
+        }
+
+        .list > *.core-selected {
+          background: #333;
+        }
+
 
     </style>
     <title>Mobility Mate</title>
@@ -101,6 +128,7 @@
     <link rel="import" href="components/paper-input/paper-input-decorator.html">
     <link rel="import" href="components/paper-button/paper-button.html">
     <link rel="import" href="components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="components/core-collapse/core-collapse.html">
     <link rel="shortcut icon" href="icons/favicon.ico">
     <script type="text/javascript" src="scripts/main.js"></script>
 </head>
@@ -117,6 +145,19 @@
         </paper-tabs>
 
     </core-toolbar>
+    <div class="heading" onclick="toggle()">Select amenities</div>
+    <core-collapse>
+        <core-selector class="list" selected="{{multiSelected}}" multi>
+            <div>Curb cuts</div>
+            <div>Lodging</div>
+            <div>Restaurants</div>
+            <div>Gas stations</div>
+            <div>Entrances</div>
+            <div>Elevators</div>
+            <div>Rental Vehicles</div>
+        </core-selector>
+    </core-collapse>
+
     <div id="addData">
         <paper-button onclick="buttonClick()" raised>Get location</paper-button>
         <br>
@@ -130,14 +171,13 @@
         Amenity:<br>
         <select name="amenity">
             <option value="-1"></option>
-            <option value="0">Bathroom</option>
-            <option value="1">Entrance</option>
-            <option value="2">Curb cut</option>
-            <option value="3">Elevator</option>
-            <option value="4">Public transport</option>
-            <option value="5">Hotel</option>
-            <option value="6">Recreation</option>
-            <option value="7">Parking</option>
+            <option value="0">Curb cuts</option>
+            <option value="1">Lodging</option>
+            <option value="2">Restaurants</option>
+            <option value="3">Gas stations</option>
+            <option value="4">Entrances</option>
+            <option value="5">Elevators</option>
+            <option value="6">Rental vehicles</option>
         </select>
         <paper-input-decorator label="Notes (optional)" floatingLabel>
             <input id="notes" is="core-input"></input>
@@ -146,28 +186,6 @@
         <paper-button raised class="colored" onclick="submit()">Submit</paper-button>
     </div>
     <div id="map-canvas"></div>
-    <footer class="site-footer">
-        <ul class="checkbox-grid">
-            <li><input type="checkbox" class="check" name="text1" id="check1" value="0"/><label
-                    for="check1">Bathrooms</label>
-                <img src="icons/blue-dot.png" height="24"></li>
-            <li><input type="checkbox" class="check" name="text2" value="1"/><label>Entrances</label>
-                <img src="icons/ltblue-dot.png" height="24"></li>
-            <li><input type="checkbox" class="check" name="text3" value="2"/><label>Curb cuts</label>
-                <img src="icons/pink-dot.png" height="24"></li>
-            <li><input type="checkbox" class="check" name="text4" value="3"/><label>Elevators</label>
-                <img src="icons/red-dot.png" height="24"></li>
-            <li><input type="checkbox" class="check" name="text5" value="4"/><label>Public transport</label>
-                <img src="icons/green-dot.png" height="24"></li>
-            <li><input type="checkbox" class="check" name="text6" value="5"/><label>Hotels</label>
-                <img src="icons/orange-dot.png" height="24"></li>
-            <li><input type="checkbox" class="check" name="text7" value="6"/><label>Recreation</label>
-                <img src="icons/purple-dot.png" height="24"></li>
-            <li><input type="checkbox" class="check" name="text8" value="7"/><label>Parking</label>
-                <img src="icons/yellow-dot.png" height="24"></li>
-            <li><input type="checkbox" id="selectAll" name="text9" value="99"/><label>View all</label></li>
-        </ul>
-    </footer>
 </core-header-panel>
 <script>
     var lat = 45;
@@ -179,6 +197,8 @@
             $('#map-canvas').hide(250);
             $('#addData').show(250);
             $('footer').hide(250)
+            var collapse = document.querySelector('core-collapse');
+            collapse.toggle();
         } else if (tabs.selected == 'map') {
             $('#map-canvas').show(250);
             $('#addData').hide(250);
@@ -203,6 +223,7 @@
         color = parseInt($('select').val());
         notes = $('#notes').val();
         data = {latitude: lat, longitude: lng, amenity: color};
+        console.log('post data = ', data);
         if (color >= 0) {
             data = {latitude: lat, longitude: lng, amenity: color, notes: notes};
             $.post("/add", data, getMarkers);

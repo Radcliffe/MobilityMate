@@ -81,7 +81,24 @@ function setMarkers(result) {
             for (var i = 0; i < N; i++) {
                 allMarkers[i].setVisible(this.checked)
             }
-        });
+    });
+    
+    var selector = document.querySelector('core-selector');
+
+    selector.addEventListener('core-select', function(e) {
+        var selected = selector.selected;
+        for (var i = 0; i < N; i++) {
+           var visible = false;
+           if ($.inArray(locations[i].color, selected) > -1)
+              visible = true;
+           allMarkers[i].setVisible(visible);
+        }
+    });
+}
+
+function toggle() {
+    var collapse = document.querySelector('core-collapse');
+    collapse.toggle();
 }
 
 google.maps.event.addDomListener(window, 'load', getCurrentPosition);
