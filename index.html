@@ -23,7 +23,7 @@
         .heading {
             background: blue;
             color: white;
-            font-size: 24px;
+           
         }
         
         .checkbox-grid li {
@@ -148,7 +148,7 @@
         </paper-tabs>
 
     </core-toolbar>
-    <div class="heading" onclick="toggle()">Select amenities</div>
+    <div class="heading" onclick="toggle()"><paper-button>Select amenities</paper-button></div>
     <core-collapse>
         <core-selector class="list" selected="{{multiSelected}}" multi>
             <div>Bathrooms</div>
@@ -204,12 +204,14 @@
     var tabs = document.querySelector('paper-tabs');
     tabs.addEventListener('core-select', function () {
         if (tabs.selected == 'new') {
+            $('.heading').hide(250);
             $('#map-canvas').hide(250);
             $('#addData').show(250);
             $('footer').hide(250)
             var collapse = document.querySelector('core-collapse');
             collapse.toggle();
         } else if (tabs.selected == 'map') {
+            $('.heading').show(250);
             $('#map-canvas').show(250);
             $('#addData').hide(250);
             $('footer').show(250);
