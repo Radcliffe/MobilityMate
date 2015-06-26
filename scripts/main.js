@@ -21,6 +21,9 @@ function setPosition(position) {
 }
 
 function initialize() {
+    console.log(navigator.userAgent);
+    var isChrome = /Chrome/.test(navigator.userAgent);
+    if (!isChrome) alert("This application requires the Chrome browser.");
     var mapOptions = {
         center: {lat: latitude, lng: longitude},
         zoom: 15
@@ -50,8 +53,13 @@ function initialize() {
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
       } else {
-        map.setCenter(place.geometry.location);
+        var loc = place.geometry.location;
+        map.setCenter(loc);
+        $('#latitude').val(loc.A.toFixed(7));
+        $('#longitude').val(loc.F.toFixed(7));
+        $('#placename').val(searchinput.value);
       }
+      
       
     });
 
@@ -71,7 +79,7 @@ function initialize() {
        } else {
          map.setCenter(place.geometry.location);
        }
-       var loc = place.geometry.location
+       var loc = place.geometry.location;
        $('#latitude').val(loc.A.toFixed(7));
        $('#longitude').val(loc.F.toFixed(7));
     });
