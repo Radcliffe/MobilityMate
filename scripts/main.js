@@ -21,7 +21,6 @@ function setPosition(position) {
 }
 
 function initialize() {
-    console.log(navigator.userAgent);
     var isChrome = /Chrome/.test(navigator.userAgent);
     if (!isChrome) alert("This application requires the Chrome browser.");
     var mapOptions = {
@@ -117,6 +116,7 @@ function setMarkers(result) {
     });
 
     N = allMarkers.length;
+    if (N == 0) {console.warn('No markers');}
 
 //    $('.check').change(
 //        function () {
