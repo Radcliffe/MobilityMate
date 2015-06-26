@@ -5,6 +5,7 @@ var locations = [];
 var map;
 
 
+
 function getCurrentPosition() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setPosition);
@@ -23,6 +24,8 @@ function setPosition(position) {
 function initialize() {
     var isChrome = /Chrome/.test(navigator.userAgent);
     if (!isChrome) alert("This application requires the Chrome browser.");
+    
+    
     var mapOptions = {
         center: {lat: latitude, lng: longitude},
         zoom: 15
@@ -91,32 +94,53 @@ function getMarkers() {
     })
 }
 
-function setMarkers(result) {
-    locations = result;
-    var icons = ['icons/blue-dot.png',
-        'icons/ltblue-dot.png',
-        'icons/pink-dot.png',
-        'icons/red-dot.png',
-        'icons/green-dot.png',
-        'icons/orange-dot.png',
-        'icons/purple-dot.png',
-        'icons/yellow-dot.png',
-        'icons/blue-pushpin.png'];
+var icons = ['icons/blue-dot.png',
+             'icons/ltblue-dot.png',
+             'icons/pink-dot.png',
+             'icons/red-dot.png',
+             'icons/green-dot.png',
+             'icons/orange-dot.png',
+             'icons/purple-dot.png',
+             'icons/yellow-dot.png',
+             'icons/blue-pushpin.png'];
 
-    var allMarkers = [];
-
-    locations.forEach(function (location) {
-        var marker = new google.maps.Marker({
-            position: {lat: location.latitude, lng: location.longitude},
-            icon: icons[location.color]
-        });
-        marker.setMap(map);
-        marker.setVisible(false);
-        allMarkers.push(marker);
+var allMarkers = [];
+    
+function pushMarker (location) {
+    var marker = new google.maps.Marker({
+        position: {lat: location.latitude, lng: location.longitude},
+        icon: icons[location.color]
     });
+    marker.setMap(map);
+    marker.setVisible(true);
+    allMarkers.push(marker);
+}
 
+function setMarkers(locations) {
+    locations.forEach(pushMarker);
     N = allMarkers.length;
-    if (N == 0) {console.warn('No markers');}
+    if (N == 0) {
+        console.warn('No markers');
+    } else {
+        console.log(N + ' markers');
+    }
+
+function submit() {
+    lat = parseFloat($('#latitude').val());
+    lng = parseFloat($('#longitude').val());
+    color = parseInt($('select').val());
+    notes = $('#notes').val();
+    if (color >= 0) {
+        data = {latitude: lat, longitude: lng, amenity: color, notes: notes};
+        $.post("/add", data);
+        pushMarker(data);
+        var latlng = new google.maps.LatLng(lat, lng);
+        map.setCenter(latlng);
+        $('#addData').hide(250);
+        google.maps.event.trigger(map, 'resize');
+    }
+}
+$('#submit').click(submit);
 
 //    $('.check').change(
 //        function () {

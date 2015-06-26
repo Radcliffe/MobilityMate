@@ -182,7 +182,7 @@
 
     </core-toolbar>
     <div class="heading" onclick="toggle()"><paper-button>Select amenities</paper-button></div>
-    <core-collapse>
+    <core-collapse class="collapse">
         <core-selector class="list" selected="{{multiSelected}}" multi>
             <div>Bathrooms</div>
             <div>Curb cuts</div>
@@ -226,7 +226,7 @@
             <input id="notes" is="core-input"></input>
         </paper-input-decorator>
         <br>
-        <paper-button raised class="colored" onclick="submit()">Submit</paper-button>
+        <paper-button raised class="colored" id="submit">Submit</paper-button>
     </div>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map-canvas"></div>
@@ -241,10 +241,10 @@
             $('.heading').hide(250);
             //$('#map-canvas').hide(250);
             $('#addData').show(250);
-            $('footer').hide(250)
-            var collapse = document.querySelector('core-collapse');
-            collapse.toggle();
+            $('footer').hide(250);
+            $('.collapse').hide(250);
         } else if (tabs.selected == 'map') {
+            $('.collapse').show(250);
             $('.heading').show(250);
             $('#map-canvas').show(250);
             $('#addData').hide(250);
@@ -255,26 +255,15 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                     function (position) {
-                        lat = position.coords.latitude.toFixed(7);
-                        lng = position.coords.longitude.toFixed(7);
+                        lat = position.coords.latitude.toFixed(6);
+                        lng = position.coords.longitude.toFixed(6);
                         $('#latitude').val(lat);
                         $('#longitude').val(lng);
                     }
             );
         }
     }
-    function submit() {
-        lat = parseFloat($('#latitude').val());
-        lng = parseFloat($('#longitude').val());
-        color = parseInt($('select').val());
-        notes = $('#notes').val();
-        data = {latitude: lat, longitude: lng, amenity: color};
-        if (color >= 0) {
-            data = {latitude: lat, longitude: lng, amenity: color, notes: notes};
-            $.post("/add", data, getMarkers);
-            location.reload();
-        }
-    }
+
 </script>
 </body>
 </html>
