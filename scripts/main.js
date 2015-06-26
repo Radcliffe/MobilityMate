@@ -27,10 +27,38 @@ function initialize() {
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
+        
+    var infowindow = new google.maps.InfoWindow();
+    
+    // map search box
+    var searchinput = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchinput);
+    var searchBox = new google.maps.places.SearchBox(
+    /** @type {HTMLInputElement} */(searchinput));
+    
+    google.maps.event.addListener(searchBox, 'places_changed', function() {
+      var places = searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+      var place = places[0];
+      if (!place.geometry) {
+         window.alert("Autocomplete's returned place contains no geometry");
+         return;
+      }
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+      }
+      
+    });
+
     var input = document.getElementById('placename');
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
-    var infowindow = new google.maps.InfoWindow();
+    
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
        infowindow.close();
        var place = autocomplete.getPlace();
