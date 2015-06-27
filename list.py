@@ -10,12 +10,13 @@ class ListHandler(webapp2.RequestHandler):
         query = Location.query(ancestor=ancestor())
         locations = []
         for loc in query.fetch():
-            dic = {'id': loc.key.id(),
-                   'latitude': loc.coordinates.lat,
-                   'longitude': loc.coordinates.lon,
-                   'amenity': loc.amenity,
-                   'color': loc.color}
-            locations.append(dic)
+            if loc.coordinates.lat and loc.coordinates.lon:
+                dic = {'id': loc.key.id(),
+                       'latitude': loc.coordinates.lat,
+                       'longitude': loc.coordinates.lon,
+                       'amenity': loc.amenity,
+                       'color': loc.color}
+                locations.append(dic)
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.dumps(locations))
 

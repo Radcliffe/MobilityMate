@@ -20,7 +20,8 @@ class LocationHandler(webapp2.RequestHandler):
         longitude = float(self.request.get('longitude'))
         color = int(self.request.get('amenity'))
         notes = self.request.get('notes')
-        save_location(latitude, longitude, color, notes)
+        if abs(latitude) <= 90 and abs(longitude) <= 180 and 0 <= color <= 999:
+            save_location(latitude, longitude, color, notes)
         self.redirect('/')
 
     def get(self):
