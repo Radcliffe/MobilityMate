@@ -23,5 +23,7 @@ handlers:
   script: add.app
 - url: /list
   script: list.app
+- url: /delete/.*
+  script: delete.app
 - url: /.*
   script: main.app
