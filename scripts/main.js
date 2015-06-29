@@ -57,8 +57,8 @@ function initialize() {
       } else {
         var loc = place.geometry.location;
         map.setCenter(loc);
-        $('#latitude').val(loc.A.toFixed(7));
-        $('#longitude').val(loc.F.toFixed(7));
+        $('#latitude').val(loc.A.toFixed(6));
+        $('#longitude').val(loc.F.toFixed(6));
         $('#placename').val(searchinput.value);
       }
       
@@ -82,10 +82,24 @@ function initialize() {
          map.setCenter(place.geometry.location);
        }
        var loc = place.geometry.location;
-       $('#latitude').val(loc.A.toFixed(7));
-       $('#longitude').val(loc.F.toFixed(7));
+       $('#latitude').val(loc.A.toFixed(6));
+       $('#longitude').val(loc.F.toFixed(6));
     });
     getMarkers();
+
+    var selector = document.querySelector('core-selector');
+
+    selector.addEventListener('core-select', function(e) {
+       var selected = selector.selected;
+       // console.log('selected ', selected);
+       // console.log('locations ', locations);
+       for (var i = 0; i < N; i++) {
+          var visible = false;
+          if ($.inArray(locations[i].color, selected) > -1)
+             visible = true;
+          allMarkers[i].setVisible(visible);
+       }
+    });
 }
 
 function getMarkers() {
@@ -123,24 +137,28 @@ var icons = ['icons/blue-dot.png',
 
 var allMarkers = [];
     
-function pushMarker (location) {
+function pushMarker (location, visible) {
+    // console.log('pushMarker');
     var marker = new google.maps.Marker({
         position: {lat: location.latitude, lng: location.longitude},
         icon: icons[location.color]
     });
     marker.setMap(map);
-    marker.setVisible(true);
+    marker.setVisible(visible);
     allMarkers.push(marker);
 }
 
-function setMarkers(locations) {
-    locations.forEach(pushMarker);
+function setMarkers(loc) {
+    locations = loc;
+    locations.forEach(function (location) {pushMarker(location, false);});
+    // console.log('locations = ', locations);
     N = allMarkers.length;
     if (N == 0) {
         console.warn('No markers');
     } else {
-        console.log(N + ' markers');
+        // console.log(N + ' markers');
     }
+}
 
 function submit() {
     lat = parseFloat($('#latitude').val());
@@ -150,53 +168,38 @@ function submit() {
     if (color >= 0) {
         data = {latitude: lat, longitude: lng, amenity: color, notes: notes};
         $.post("/add", data);
-        pushMarker(data);
+        pushMarker(data, true);
+        N = N + 1;
         var latlng = new google.maps.LatLng(lat, lng);
         map.setCenter(latlng);
-        $('#addData').hide(250);
+        // $('#addData').hide(250);
         google.maps.event.trigger(map, 'resize');
     }
+    clearForm();
 }
 $('#submit').click(submit);
 
-//    $('.check').change(
-//        function () {
-//            var color = parseInt(this.value);
-//            for (var i = 0; i < N; i++) {
-//                if (locations[i].color == color) {
-//                    allMarkers[i].setVisible(this.checked)
-//                }
-//            }
-//        }
-//    );
-
-//    $('#selectAll').click(
-//        function () {
-//            var checked = this.checked;
-//            $('.check').each(function () {
-//                this.checked = checked;
-//            });
-//            for (var i = 0; i < N; i++) {
-//                allMarkers[i].setVisible(this.checked)
-//            }
-//    });
-    
-    var selector = document.querySelector('core-selector');
-
-    selector.addEventListener('core-select', function(e) {
-        var selected = selector.selected;
-        for (var i = 0; i < N; i++) {
-           var visible = false;
-           if ($.inArray(locations[i].color, selected) > -1)
-              visible = true;
-           allMarkers[i].setVisible(visible);
-        }
-    });
+function clearForm() {
+   $('#latitude').val('');
+   $('#longitude').val('');
+   $('#notes').val('');
+   $('#placename').val('');
 }
+   
 
 function toggle() {
     var collapse = document.querySelector('core-collapse');
     collapse.toggle();
 }
+
+function showAll() {
+    var selector = document.querySelector('core-selector');
+    selector.selected = ["", 0, 1, 2, 3, 4, 5, 6, 7, 8];
+    // for (var i = 0; i < N; i++)
+    //   allMarkers[i].setVisible(true);
+
+}
+
+// $('#selectAmenities').click(toggle);
 
 google.maps.event.addDomListener(window, 'load', getCurrentPosition);
