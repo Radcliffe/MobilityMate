@@ -161,6 +161,7 @@ function setMarkers(loc) {
 }
 
 function submit() {
+    // console.log('Submit');
     lat = parseFloat($('#latitude').val());
     lng = parseFloat($('#longitude').val());
     color = parseInt($('select').val());
@@ -177,7 +178,6 @@ function submit() {
     }
     clearForm();
 }
-$('#submit').click(submit);
 
 function clearForm() {
    $('#latitude').val('');
